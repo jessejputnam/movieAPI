@@ -41,6 +41,7 @@ public class ConnectionUtil {
             getConnection();
         else {
             try {
+                // Create SQL tables and seed genres if not present
                 FileReader sqlReader = new FileReader("src/main/resources/data.sql");
                 RunScript.execute(connection, sqlReader);
             } catch (SQLException | FileNotFoundException e) {
