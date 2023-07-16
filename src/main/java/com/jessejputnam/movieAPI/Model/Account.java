@@ -3,50 +3,50 @@ package com.jessejputnam.movieAPI.Model;
 import java.util.UUID;
 
 public class Account {
-    private String accountId;
+    private String id;
     private String username;
     private String password;
     private String email;
 
     /**
-     * Create new account to push to DB
+     * Constructor for new account to push to DB
      * 
-     * @param username String for unique username
-     * @param password String
-     * @param email    String for unique email
+     * @param username - String
+     * @param password - String
+     * @param email    - String
      */
     public Account(String username, String password, String email) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.accountId = UUID.randomUUID().toString();
+        this.id = UUID.randomUUID().toString();
     }
 
     /**
-     * Recreate existing account from DB will all fields
+     * Constructor for existing account from DB will all fields
      * 
-     * @param accountId String
-     * @param username  String
-     * @param password  String
-     * @param email     String
+     * @param id       - String
+     * @param username - String
+     * @param password - String
+     * @param email    - String
      */
-    public Account(String accountId, String username, String password, String email) {
-        this.accountId = accountId;
+    public Account(String id, String username, String password, String email) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
     }
 
-    public String getAccountId() {
-        return accountId;
+    public String getId() {
+        return id;
     }
 
-    public void setAccountId() {
-        accountId = UUID.randomUUID().toString();
+    public void setId() {
+        id = UUID.randomUUID().toString();
     }
 
-    public void setAccountId(String accountId) {
-        this.accountId = accountId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -82,7 +82,7 @@ public class Account {
 
         Account acc = (Account) obj;
 
-        return acc.getAccountId().equals(accountId) && acc.getPassword().equals(password)
+        return acc.getId().equals(id) && acc.getPassword().equals(password)
                 && acc.getUsername().equals(username) && acc.getEmail().equals(email);
     }
 
@@ -90,7 +90,7 @@ public class Account {
     public int hashCode() {
         int prime = 31;
         int result = 1;
-        result = prime * result + ((accountId == null) ? 0 : accountId.hashCode());
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((username == null) ? 0 : username.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
         result = prime * result + ((password == null) ? 0 : password.hashCode());
@@ -99,7 +99,7 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account{" + "id: " + accountId + ", username: " + username + ", password: " + password + ", email: "
+        return "Account{" + "id: " + id + ", username: " + username + ", password: " + password + ", email: "
                 + email + "}";
     }
 }
