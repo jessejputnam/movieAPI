@@ -32,8 +32,8 @@ public class Genre {
         if (obj == null || this.getClass() != obj.getClass())
             return false;
 
-        Genre gen = (Genre) obj;
-        return gen.getId() == id && gen.getName().equals(name);
+        Genre genre = (Genre) obj;
+        return genre.getId() == id && genre.getName().equals(name);
     }
 
     @Override

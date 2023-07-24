@@ -14,8 +14,7 @@ public class Video {
     private double userRating;
     private double popularity;
 
-    private String videoGenreId;
-    private String listId;
+    private int listId;
 
     /**
      * Constructor for new video to push to DB
@@ -30,10 +29,10 @@ public class Video {
      * @param userRating   - double
      * @param popularity   - double
      * @param videoGenreId - String
-     * @param listId       - String
+     * @param listId       - int
      */
     public Video(int apiId, String title, String releaseDate, String overview, String imgSmall, String imgLarge,
-            double voteAverage, double userRating, double popularity, String videoGenreId, String listId) {
+            double voteAverage, double userRating, double popularity, int listId) {
         id = UUID.randomUUID().toString();
         this.apiId = apiId;
         this.title = title;
@@ -44,7 +43,6 @@ public class Video {
         this.voteAverage = voteAverage;
         this.userRating = userRating;
         this.popularity = popularity;
-        this.videoGenreId = videoGenreId;
         this.listId = listId;
     }
 
@@ -66,7 +64,7 @@ public class Video {
      */
     public Video(String id, int apiId, String title, String releaseDate, String overview, String imgSmall,
             String imgLarge,
-            double voteAverage, double userRating, double popularity, String videoGenreId, String listId) {
+            double voteAverage, double userRating, double popularity, int listId) {
         this.id = id;
         this.apiId = apiId;
         this.imgSmall = imgSmall;
@@ -77,7 +75,6 @@ public class Video {
         this.voteAverage = voteAverage;
         this.userRating = userRating;
         this.popularity = popularity;
-        this.videoGenreId = videoGenreId;
         this.listId = listId;
     }
 
@@ -165,19 +162,11 @@ public class Video {
         this.popularity = popularity;
     }
 
-    public String getVideoGenreId() {
-        return videoGenreId;
-    }
-
-    public void setVideoGenreId(String videoGenreId) {
-        this.videoGenreId = videoGenreId;
-    }
-
-    public String getListId() {
+    public int getListId() {
         return listId;
     }
 
-    public void setListId(String listId) {
+    public void setListId(int listId) {
         this.listId = listId;
     }
 
@@ -193,8 +182,8 @@ public class Video {
                 && vid.getImgLarge().equals(imgLarge) && vid.getTitle().equals(title)
                 && vid.getOverview().equals(overview) && vid.getReleaseDate().equals(releaseDate)
                 && vid.getVoteAverage() == voteAverage && vid.getUserRating() == userRating
-                && vid.getPopularity() == popularity && vid.getVideoGenreId().equals(videoGenreId)
-                && vid.getListId().equals(listId);
+                && vid.getPopularity() == popularity
+                && vid.getListId() == listId;
     }
 
     @Override
@@ -214,8 +203,7 @@ public class Video {
         result = prime * result + (int) (temp ^ (temp >>> 32));
         temp = Double.doubleToLongBits(popularity);
         result = prime * result + (int) (temp ^ (temp >>> 32));
-        result = prime * result + (videoGenreId != null ? videoGenreId.hashCode() : 0);
-        result = prime * result + (listId != null ? listId.hashCode() : 0);
+        result = prime * result + listId;
         return result;
     }
 
@@ -223,7 +211,7 @@ public class Video {
     public String toString() {
         return "Video{id: " + id + ", apiId: " + apiId + ", title: " + title + ", releaseDate: " + releaseDate
                 + ", overview: " + overview + ", imgSmall: " + imgSmall + ", imgLarge: " + imgLarge + ", voteAverage: "
-                + voteAverage + ", userRating: " + userRating + ", popularity: " + popularity + ", videoGenreId: "
-                + videoGenreId + ", listId: " + listId + "}";
+                + voteAverage + ", userRating: " + userRating + ", popularity: " + popularity + ", listId: " + listId
+                + "}";
     }
 }
