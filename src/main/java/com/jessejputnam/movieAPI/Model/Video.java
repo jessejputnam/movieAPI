@@ -1,6 +1,8 @@
 package com.jessejputnam.movieAPI.Model;
 
 import java.util.UUID;
+import java.util.HashSet;
+import java.util.List;
 
 public class Video {
     private String id;
@@ -13,26 +15,28 @@ public class Video {
     private double voteAverage;
     private double userRating;
     private double popularity;
-
+    private List<Integer> genres;
     private int listId;
+
+    // private List<Genre> genres;
 
     /**
      * Constructor for new video to push to DB
      * 
-     * @param apiId        - int
-     * @param title        - String
-     * @param releaseDate  - String
-     * @param overview     - String
-     * @param imgSmall     - String
-     * @param imgLarge     - String
-     * @param voteAverage  - double
-     * @param userRating   - double
-     * @param popularity   - double
-     * @param videoGenreId - String
-     * @param listId       - int
+     * @param apiId       - int
+     * @param title       - String
+     * @param releaseDate - String
+     * @param overview    - String
+     * @param imgSmall    - String
+     * @param imgLarge    - String
+     * @param voteAverage - double
+     * @param userRating  - double
+     * @param popularity  - double
+     * @param genres      - List<Integer>
+     * @param listId      - int
      */
     public Video(int apiId, String title, String releaseDate, String overview, String imgSmall, String imgLarge,
-            double voteAverage, double userRating, double popularity, int listId) {
+            double voteAverage, double userRating, double popularity, List<Integer> genres, int listId) {
         id = UUID.randomUUID().toString();
         this.apiId = apiId;
         this.title = title;
@@ -43,28 +47,29 @@ public class Video {
         this.voteAverage = voteAverage;
         this.userRating = userRating;
         this.popularity = popularity;
+        this.genres = genres;
         this.listId = listId;
     }
 
     /**
      * Constructor for existing account from DB with all fields
      * 
-     * @param id           - String
-     * @param apiId        - int
-     * @param title        - String
-     * @param releaseDate  - String
-     * @param overview     - String
-     * @param imgSmall     - String
-     * @param imgLarge     - String
-     * @param voteAverage  - double
-     * @param userRating   - double
-     * @param popularity   - double
-     * @param videoGenreId - String
-     * @param listId       - String
+     * @param id          - String
+     * @param apiId       - int
+     * @param title       - String
+     * @param releaseDate - String
+     * @param overview    - String
+     * @param imgSmall    - String
+     * @param imgLarge    - String
+     * @param voteAverage - double
+     * @param userRating  - double
+     * @param popularity  - double
+     * @param genres      - List<Integer>
+     * @param listId      - String
      */
     public Video(String id, int apiId, String title, String releaseDate, String overview, String imgSmall,
             String imgLarge,
-            double voteAverage, double userRating, double popularity, int listId) {
+            double voteAverage, double userRating, double popularity, List<Integer> genres, int listId) {
         this.id = id;
         this.apiId = apiId;
         this.imgSmall = imgSmall;
@@ -75,6 +80,7 @@ public class Video {
         this.voteAverage = voteAverage;
         this.userRating = userRating;
         this.popularity = popularity;
+        this.genres = genres;
         this.listId = listId;
     }
 
@@ -162,12 +168,52 @@ public class Video {
         this.popularity = popularity;
     }
 
+    public List<Integer> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<Integer> genres) {
+        this.genres = genres;
+    }
+
+    /**
+     * Add single genre to genres list
+     * 
+     * @param genreId
+     */
+    public void addGenre(int genreId) {
+        genres.add(genreId);
+    }
+
+    /**
+     * Removes specific genre from genres list
+     * 
+     * @param genreId
+     */
+    public void removeGenre(int genreId) {
+        int idx = genres.indexOf(genreId);
+        genres.remove(idx);
+    }
+
     public int getListId() {
         return listId;
     }
 
     public void setListId(int listId) {
         this.listId = listId;
+    }
+
+    public boolean hasSameGenres(List<Integer> genres) {
+        HashSet<Integer> set = new HashSet<>(this.genres);
+
+        if (set.size() != genres.size())
+            return false;
+
+        for (Integer num : genres)
+            if (!set.contains(num))
+                return false;
+
+        return true;
     }
 
     @Override
@@ -183,6 +229,7 @@ public class Video {
                 && vid.getOverview().equals(overview) && vid.getReleaseDate().equals(releaseDate)
                 && vid.getVoteAverage() == voteAverage && vid.getUserRating() == userRating
                 && vid.getPopularity() == popularity
+                && vid.hasSameGenres(genres)
                 && vid.getListId() == listId;
     }
 
@@ -204,6 +251,8 @@ public class Video {
         temp = Double.doubleToLongBits(popularity);
         result = prime * result + (int) (temp ^ (temp >>> 32));
         result = prime * result + listId;
+        for (Integer genre : genres)
+            result = result + genre;
         return result;
     }
 
