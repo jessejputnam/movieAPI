@@ -203,6 +203,13 @@ public class Video {
         this.listId = listId;
     }
 
+    /**
+     * Check if the Video has the all the same genres as with another video and no
+     * extra or different genres
+     * 
+     * @param genres
+     * @return
+     */
     public boolean hasSameGenres(List<Integer> genres) {
         HashSet<Integer> set = new HashSet<>(this.genres);
 
